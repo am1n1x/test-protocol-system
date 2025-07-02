@@ -16,6 +16,11 @@ class ProjectSeeder extends Seeder
      */
     public function run(): void
     {
+        // Проверяем, есть ли уже проекты в базе
+        if (Project::count() > 0) {
+            return; // Если проекты есть, выходим
+        }
+
         // Получаем первого пользователя или создаем нового
         $user = User::first() ?? User::factory()->create([
             'name' => 'Администратор',

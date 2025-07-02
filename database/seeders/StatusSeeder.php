@@ -13,6 +13,11 @@ class StatusSeeder extends Seeder
      */
     public function run(): void
     {
+        // Проверяем, есть ли уже данные в таблице
+        if (DB::table('statuses')->count() > 0) {
+            return; // Если данные есть, выходим
+        }
+
         $statuses = [
             ['id' => 1, 'name' => 'Не протестировано'],
             ['id' => 2, 'name' => 'Пройден'],
