@@ -30,9 +30,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('projects/{project}/requirements/{requirement}/attachments/{attachment}', [RequirementController::class, 'deleteAttachment'])
         ->name('projects.requirements.attachments.destroy');
     
-    // Attachment download route
+    // Attachment routes
     Route::get('attachments/{attachment}/download', [AttachmentController::class, 'download'])
         ->name('attachments.download');
+    Route::delete('attachments/{attachment}', [AttachmentController::class, 'destroy'])
+        ->name('attachments.destroy');
+    
+    // Download all attachments for a requirement
+    Route::get('requirements/{requirement}/attachments/download-all', [AttachmentController::class, 'downloadAll'])
+        ->name('requirements.attachments.download-all');
     
     // Test Cases routes (nested under projects)
     Route::resource('projects.test-cases', TestCaseController::class)->scoped();

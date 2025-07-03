@@ -51,12 +51,18 @@
                         </label>
                         <div class="space-y-2">
                             @foreach($requirement->attachments as $attachment)
-                                <div class="flex items-center justify-between bg-gray-50 p-2 rounded">
+                                <div class="flex items-center justify-between bg-gray-50 p-2 rounded" id="attachment-{{ $attachment->id }}">
                                     <span class="text-sm text-gray-700">{{ $attachment->filename }}</span>
-                                    <a href="{{ route('attachments.download', $attachment) }}" 
-                                       class="text-blue-500 hover:text-blue-700 text-sm">
-                                        Скачать
-                                    </a>
+                                    <div class="flex space-x-2">
+                                        <a href="{{ route('attachments.download', $attachment) }}" 
+                                           class="text-blue-500 hover:text-blue-700 text-sm">
+                                            Скачать
+                                        </a>
+                                        <button type="button" onclick="deleteAttachment({{ $attachment->id }})"
+                                                class="text-red-500 hover:text-red-700 text-sm">
+                                            Удалить
+                                        </button>
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
@@ -90,3 +96,47 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+function deleteAttachment(attachmentId) {
+    if (confirm('Вы уверены, что хотите удалить этот файл?')) {
+        fetch(`/attachments/${attachmentId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Remove attachment element from DOM
+                const attachmentElement = document.getElementById(`attachment-${attachmentId}`);
+                if (attachmentElement) {
+                    attachmentElement.remove();
+                }
+                
+                // Check if no attachments remain and hide the section
+                const remainingCount = document.querySelectorAll('[id^="attachment-"]').length;
+                if (remainingCount === 0) {
+                    const attachmentsSection = document.querySelector('.mb-4:has([id^="attachment-"])');
+                    if (attachmentsSection) {
+                        attachmentsSection.style.display = 'none';
+                    }
+                }
+                
+                alert('Файл успешно удален');
+            } else {
+                alert('Ошибка при удалении файла');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Ошибка при удалении файла');
+        });
+    }
+}
+</script>
+@endpush
