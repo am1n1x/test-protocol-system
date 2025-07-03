@@ -6,6 +6,7 @@ use App\Http\Controllers\RequirementController;
 use App\Http\Controllers\TestCaseController;
 use App\Http\Controllers\TestProtocolController;
 use App\Http\Controllers\TestResultController;
+use App\Http\Controllers\AttachmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,6 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects.requirements', RequirementController::class)->scoped();
     Route::delete('projects/{project}/requirements/{requirement}/attachments/{attachment}', [RequirementController::class, 'deleteAttachment'])
         ->name('projects.requirements.attachments.destroy');
+    
+    // Attachment download route
+    Route::get('attachments/{attachment}/download', [AttachmentController::class, 'download'])
+        ->name('attachments.download');
     
     // Test Cases routes (nested under projects)
     Route::resource('projects.test-cases', TestCaseController::class)->scoped();

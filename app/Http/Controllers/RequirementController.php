@@ -75,6 +75,7 @@ class RequirementController extends Controller
      */
     public function edit(Project $project, Requirement $requirement)
     {
+        $requirement->load('attachments');
         return view('requirements.edit', compact('project', 'requirement'));
     }
 
