@@ -14,7 +14,7 @@ class TestCaseController extends Controller
      */
     public function index(Project $project)
     {
-        $testCases = $project->testCases()->with('user')->latest()->get();
+        $testCases = $project->testCases()->with(['user', 'requirement'])->latest()->get();
         return view('test-cases.index', compact('project', 'testCases'));
     }
 
@@ -23,7 +23,8 @@ class TestCaseController extends Controller
      */
     public function create(Project $project)
     {
-        return view('test-cases.create', compact('project'));
+        $requirements = $project->requirements()->get();
+        return view('test-cases.create', compact('project', 'requirements'));
     }
 
     /**
@@ -32,12 +33,14 @@ class TestCaseController extends Controller
     public function store(Request $request, Project $project)
     {
         $request->validate([
+            'requirement_id' => 'nullable|exists:requirements,id',
             'description' => 'required|string',
             'actions' => 'required|string',
             'expected_result' => 'required|string',
         ]);
 
         $project->testCases()->create([
+            'requirement_id' => $request->requirement_id,
             'description' => $request->description,
             'actions' => $request->actions,
             'expected_result' => $request->expected_result,
@@ -53,7 +56,7 @@ class TestCaseController extends Controller
      */
     public function show(Project $project, TestCase $testCase)
     {
-        $testCase->load('user');
+        $testCase->load(['user', 'requirement']);
         return view('test-cases.show', compact('project', 'testCase'));
     }
 
@@ -62,7 +65,8 @@ class TestCaseController extends Controller
      */
     public function edit(Project $project, TestCase $testCase)
     {
-        return view('test-cases.edit', compact('project', 'testCase'));
+        $requirements = $project->requirements()->get();
+        return view('test-cases.edit', compact('project', 'testCase', 'requirements'));
     }
 
     /**
@@ -71,12 +75,14 @@ class TestCaseController extends Controller
     public function update(Request $request, Project $project, TestCase $testCase)
     {
         $request->validate([
+            'requirement_id' => 'nullable|exists:requirements,id',
             'description' => 'required|string',
             'actions' => 'required|string',
             'expected_result' => 'required|string',
         ]);
 
         $testCase->update([
+            'requirement_id' => $request->requirement_id,
             'description' => $request->description,
             'actions' => $request->actions,
             'expected_result' => $request->expected_result,

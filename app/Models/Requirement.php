@@ -41,4 +41,12 @@ class Requirement extends Model
     {
         return $this->hasMany(Attachment::class);
     }
+
+    /**
+     * Get the test cases for the requirement.
+     */
+    public function testCases(): HasMany
+    {
+        return $this->hasMany(TestCase::class);
+    }
 }

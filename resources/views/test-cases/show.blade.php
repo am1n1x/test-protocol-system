@@ -30,16 +30,22 @@
                         <p class="text-gray-900 bg-gray-50 p-2 rounded">#{{ $testCase->id }}</p>
                     </div>
                     <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Требование:</label>
+                        @if($testCase->requirement)
+                            <p class="text-gray-900 bg-gray-50 p-2 rounded">
+                                <span class="font-medium">#{{ $testCase->requirement->id }}</span> - {{ $testCase->requirement->title }}
+                            </p>
+                        @else
+                            <p class="text-gray-500 bg-gray-50 p-2 rounded italic">Не указано</p>
+                        @endif
+                    </div>
+                    <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Автор:</label>
                         <p class="text-gray-900 bg-gray-50 p-2 rounded">{{ $testCase->user->name }}</p>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Дата создания:</label>
                         <p class="text-gray-900 bg-gray-50 p-2 rounded">{{ $testCase->created_at->format('d.m.Y H:i') }}</p>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Дата обновления:</label>
-                        <p class="text-gray-900 bg-gray-50 p-2 rounded">{{ $testCase->updated_at->format('d.m.Y H:i') }}</p>
                     </div>
                 </div>
             </div>

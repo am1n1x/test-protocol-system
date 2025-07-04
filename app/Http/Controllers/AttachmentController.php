@@ -18,7 +18,6 @@ class AttachmentController extends Controller
     public function download(Attachment $attachment): BinaryFileResponse
     {
         // Check if user has access to this attachment
-        // This is a basic check - you might want to implement more sophisticated access control
         if (!Auth::check()) {
             abort(403, 'Unauthorized');
         }

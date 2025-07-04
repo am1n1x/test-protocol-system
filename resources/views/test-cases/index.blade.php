@@ -31,6 +31,9 @@
                                 #
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Требование
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Описание шага
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -52,6 +55,18 @@
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                     {{ $index + 1 }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if($testCase->requirement)
+                                        <div class="text-sm font-medium text-gray-900">
+                                            #{{ $testCase->requirement->id }}
+                                        </div>
+                                        <div class="text-sm text-gray-500">
+                                            {{ Str::limit($testCase->requirement->title, 30) }}
+                                        </div>
+                                    @else
+                                        <span class="text-sm text-gray-400">Не указано</span>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="text-sm text-gray-900">

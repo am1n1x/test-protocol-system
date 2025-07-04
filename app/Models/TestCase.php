@@ -13,6 +13,7 @@ class TestCase extends Model
     protected $fillable = [
         'project_id',
         'user_id',
+        'requirement_id',
         'description',
         'actions',
         'expected_result',
@@ -32,5 +33,13 @@ class TestCase extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the requirement that this test case belongs to.
+     */
+    public function requirement(): BelongsTo
+    {
+        return $this->belongsTo(Requirement::class);
     }
 }
