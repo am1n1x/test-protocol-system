@@ -1,61 +1,116 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Система управления протоколами тестирования ПО
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Веб-приложение для автоматизации ведения тест-документации и управления протоколами тестирования программного обеспечения.
 
-## About Laravel
+## Описание проекта
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Система управления протоколами тестирования ПО** — это веб-инструмент на базе архитектурного паттерна MVC, позволяющий централизованно хранить требования к программному обеспечению, связывать их с тест-кейсами и фиксировать результаты прохождения проверок в интерактивных протоколах тестирования. Проект обеспечивает прозрачную прослеживаемость (traceability) между требованиями и сценариями тестирования.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Основные цели системы:
+* **Автоматизация процессов:** упрощение создания требований, тест-кейсов и ведения отчетности.
+* **Централизация хранения:** хранение проектных требований и вложенных файлов в единой базе.
+* **Связанность данных:** прозрачная навигация и сопоставление требований с тест-кейсами (`Один-ко-многим`).
+* **Анализ результатов:** фиксация статусов выполнения проверок в реальном времени.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Функциональные возможности
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 1. Управление проектами
+* Создание, просмотр, редактирование и удаление проектов тестирования.
+* Отображение сводной аналитики (общее количество требований и тест-кейсов в проекте).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Управление требованиями
+* Добавление детальных требований к ПО в рамках выбранного проекта.
+* Загрузка, скачивание и удаление вложений (изображения, документы размером до 10 МБ).
+* Возможность как одиночного скачивания файлов, так и групповой выгрузки всех вложений к требованию в виде ZIP-архива.
 
-## Laravel Sponsors
+### 3. Управление тест-кейсами
+* Создание тест-кейсов со строгой привязкой к конкретным требованиям.
+* Структурированное описание сценариев: описание шага, ожидаемый результат и конкретные действия в системе.
+* Визуальное отображение связей между тест-кейсом и требованием.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 4. Протоколы тестирования и результаты
+* Создание протоколов прохождения тестов.
+* Фиксация результатов выполнения каждого шага со статусами: `Не протестировано`, `Успешно` (`passed`), `Ошибка` (`failed`), `Пропущено` (`skipped`).
+* Возможность внесения фактического результата тестирования и привязки к тестировщику.
 
-### Premium Partners
+### 5. Безопасность и авторизация
+* Полноценная система аутентификации пользователей (регистрация, вход, управление профилем).
+* Хеширование паролей алгоритмом `bcrypt` и встроенная защита форм от CSRF-атак.
+* Автоматическая привязка создаваемых сущностей к конкретному пользователю.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
 
-## Contributing
+## Технологический стек
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* **Backend:** PHP 8.4, фреймворк Laravel 12 (Eloquent ORM)
+* **Database:** PostgreSQL 17 (в Docker-контейнере)
+* **Frontend:** Blade Templates, Tailwind CSS, Vite, асинхронные AJAX-запросы
+* **Containerization:** Docker & Docker Compose с использованием среды разработки Laravel Sail
+* **Файловая система:** Laravel Storage (диск `public`)
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Инструкция по развертыванию
 
-## Security Vulnerabilities
+### Шаг 1: Клонирование репозитория
+```bash
+git clone https://github.com/am1n1x/test-protocol-system.git
+cd test-protocol-system
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Шаг 2: Настройка переменных окружения
+Создайте локальный файл конфигурации на основе примера:
+```bash
+cp .env.example .env
+```
+Убедитесь, что параметры подключения к БД настроены для работы с контейнером Sail:
+```env
+DB_CONNECTION=pgsql
+DB_HOST=pgsql
+DB_PORT=5432
+DB_DATABASE=test_protocol_system
+DB_USERNAME=sail
+DB_PASSWORD=password
+```
 
-## License
+### Шаг 3: Установка зависимостей
+Вы можете установить зависимости локально (при наличии PHP и Node.js на хост-машине):
+```bash
+composer install
+npm install
+```
+*Или выполнить установку зависимостей через временный контейнер Sail (если PHP не установлен на хосте):*
+```bash
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php84-composer:latest \
+    composer install --ignore-platform-reqs
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Шаг 4: Запуск Docker-окружения
+Запустите контейнеры проекта в фоновом режиме через Laravel Sail:
+```bash
+./vendor/bin/sail up -d
+```
+*(Для удобства рекомендуется настроить alias в вашей командной строке WSL/Linux: `alias sail="./vendor/bin/sail"`)*
+
+### Шаг 5: Генерация ключа и миграции базы данных
+Выполните генерацию ключа приложения, разверните структуру базы данных и заполните её тестовыми начальными данными (сидерами):
+```bash
+sail artisan key:generate
+sail artisan migrate:fresh --seed
+```
+
+### Шаг 6: Запуск фронтенда
+Для локальной разработки с поддержкой автоматической перезагрузки интерфейса (Hot Reload):
+```bash
+sail npm run dev
+```
+Для сборки оптимизированных статических файлов (production-сборка):
+```bash
+sail npm run build
+```
+
+После выполнения указанных шагов приложение будет доступно по адресу: **`http://localhost`** (или по порту, настроенному в `.env`).
